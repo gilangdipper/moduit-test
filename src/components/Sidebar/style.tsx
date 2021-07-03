@@ -8,7 +8,7 @@ export const SidebarWrapper = styled.div`
   background-color: #ffffff;
   align-items: center;
   border-radius: 0 20px 20px 0;
-  box-shadow: rgb(0 0 0 / 20%) 0px 3px 14px 0px;
+  box-shadow: rgb(10 80 161 / 30%) 0px 3px 14px 0px;
 
   svg {
     margin: 40px 0 68px 0;

@@ -1,6 +1,6 @@
-import { IProduct } from './interface';
+import { IProduct } from '../interfaces';
 /* eslint-disable */
-export const products: IProduct[] = [
+const products: IProduct[] = [
    {
       "id":949448,
       "category":5,
@@ -358,4 +358,6 @@ export const products: IProduct[] = [
       "createdAt":"2021-07-02T14:19:45.4351147+00:00"
    }
  ];
+
+ export default products;
 /* eslint-disable */
