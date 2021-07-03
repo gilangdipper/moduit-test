@@ -34,27 +34,29 @@ const Paginator: FC<IPaginator> = (props) => {
     <PaginatorWrapper>
       <TableWrapper>
         <table>
-          <tr>
-            {TABLE_HEADER_MAP.map((header) => (
-              <th>{header}</th>
-            ))}
-          </tr>
-
-          {data.map((product: IProduct) => (
+          <tbody>
             <tr>
-              <td>{product.title}</td>
-              <td>{product.id}</td>
-              <td>{product.category || '-'}</td>
-              <td>{product.description}</td>
-              <td>
-                <ul className="tags-wrapper">
-                  {(product.tags || []).map((tag) => (
-                    <li>{tag}</li>
-                  ))}
-                </ul>
-              </td>
+              {TABLE_HEADER_MAP.map((header) => (
+                <th key={header}>{header}</th>
+              ))}
             </tr>
-          ))}
+
+            {data.map((product: IProduct) => (
+              <tr key={product.id}>
+                <td>{product.title}</td>
+                <td>{product.id}</td>
+                <td>{product.category || '-'}</td>
+                <td>{product.description}</td>
+                <td>
+                  <ul className="tags-wrapper">
+                    {(product.tags || []).map((tag) => (
+                      <li key={`${tag}`}>{tag}</li>
+                    ))}
+                  </ul>
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </TableWrapper>
 

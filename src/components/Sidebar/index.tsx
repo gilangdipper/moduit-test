@@ -6,7 +6,7 @@ import { ReactComponent as Logo } from '../../logo/logo.svg';
 import Q1 from '../../icon/Q1.svg';
 import Q2 from '../../icon/Q2.svg';
 
-import { MENU_MAP } from '../../config';
+import { MENU_MAP } from '../../constants';
 
 const LOGO_MENU_MAP = {
   QUESTION_ONE: Q1,
@@ -21,7 +21,7 @@ const Sidebar = () => (
       const activeClass = MENU_MAP[menuKey] === MENU_MAP.QUESTION_ONE
         ? 'active' : '';
       return (
-        <div className={`menu-item ${activeClass}`}>
+        <div key={menuKey} className={`menu-item ${activeClass}`}>
           <div className="menu-icon">
             <img alt="menu" src={LOGO_MENU_MAP[menuKey]} />
           </div>

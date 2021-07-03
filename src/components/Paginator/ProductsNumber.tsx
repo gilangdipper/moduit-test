@@ -86,6 +86,7 @@ const ProductsNumber = () => {
       <div className="dropup-content">
         {PAGE_NUMBER_MAP.map((pageNumber) => (
           <div
+            key={pageNumber}
             className="dropup-item"
           >
             {pageNumber}

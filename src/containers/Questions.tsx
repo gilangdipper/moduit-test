@@ -1,15 +1,16 @@
-import React, { useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import styled from 'styled-components';
+import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 import productsDummy from './dummy';
 
 import { IProduct } from '../interfaces';
+import { BASE_API_URL, MENU_MAP, PRODUCT_API_URL } from '../constants';
 
 import Sidebar from '../components/Sidebar';
 import SearchBox from '../components/SearchBox';
 import Paginator from '../components/Paginator';
-
-import { MENU_MAP } from '../config';
 
 interface IState {
   products: IProduct[],
@@ -33,7 +34,7 @@ const initialState: IState = {
 
 type TAction =
   | { type: 'FETCH_PRODUCTS_SUCCESS', payload: { products: IProduct[] } }
-  | { type: 'FETCH_PRODUCTS_FAIL', payload: { error: string } }
+  | { type: 'FETCH_PRODUCTS_ERROR', payload: { error: string } }
   | { type: 'UPDATE_PAGINATION', payload: { numberOfPage?: number, numberOfProducts?: number } };
 
 const reducer = (state: IState, action: TAction) => {
@@ -45,7 +46,7 @@ const reducer = (state: IState, action: TAction) => {
         products: action.payload.products,
       };
     }
-    case 'FETCH_PRODUCTS_FAIL': {
+    case 'FETCH_PRODUCTS_ERROR': {
       return {
         ...state,
         isLoading: false,
@@ -69,6 +70,26 @@ const reducer = (state: IState, action: TAction) => {
 const Questions = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { products, pagination } = state;
+  const { pathname } = useLocation();
+  const urlApi = `${BASE_API_URL}${PRODUCT_API_URL[pathname]}`;
+
+  useEffect(() => {
+    axios
+      .get(urlApi)
+      .then((response) => {
+        dispatch({
+          type: 'FETCH_PRODUCTS_SUCCESS',
+          payload: { products: response.data },
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          type: 'FETCH_PRODUCTS_ERROR',
+          payload: { error },
+        });
+      });
+  }, [urlApi]);
+
   return (
     <QuestionsWrapper>
       <Sidebar />
