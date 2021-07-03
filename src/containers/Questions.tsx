@@ -3,9 +3,6 @@ import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 
-import productsDummy from './dummy';
-
-import { IProduct } from '../interfaces';
 import {
   BASE_API_URL,
   ENUM_PATHNAME,
@@ -13,79 +10,11 @@ import {
   PRODUCT_API_URL,
 } from '../constants';
 
+import { initialState, reducer } from '../reducer';
+
 import Sidebar from '../components/Sidebar';
 import SearchBox from '../components/SearchBox';
 import Paginator from '../components/Paginator';
-
-interface IState {
-  error: string,
-  filter: {
-    search: string,
-  },
-  isLoading: boolean,
-  pagination: {
-    numberOfPage: number,
-    numberOfProducts: number,
-  },
-  products: IProduct[],
-}
-
-const initialState: IState = {
-  error: '',
-  filter: {
-    search: '',
-  },
-  isLoading: true,
-  pagination: {
-    numberOfPage: 1,
-    numberOfProducts: 8,
-  },
-  products: productsDummy,
-};
-
-type TAction =
-  | { type: 'FETCH_PRODUCTS_SUCCESS', payload: { products: IProduct[] } }
-  | { type: 'FETCH_PRODUCTS_ERROR', payload: { error: string } }
-  | { type: 'UPDATE_PAGINATION', payload: { numberOfPage?: number, numberOfProducts?: number } }
-  | { type: 'UPDATE_FILTER', payload: { search: string } };
-
-const reducer = (state: IState, action: TAction) => {
-  switch (action.type) {
-    case 'FETCH_PRODUCTS_SUCCESS': {
-      return {
-        ...state,
-        isLoading: false,
-        products: action.payload.products,
-      };
-    }
-    case 'FETCH_PRODUCTS_ERROR': {
-      return {
-        ...state,
-        isLoading: false,
-        error: action.payload.error,
-      };
-    }
-    case 'UPDATE_PAGINATION': {
-      return {
-        ...state,
-        pagination: {
-          ...state.pagination,
-          ...action.payload,
-        },
-      };
-    }
-    case 'UPDATE_FILTER': {
-      return {
-        ...state,
-        filter: {
-          ...action.payload,
-        },
-      };
-    }
-    default:
-      return state;
-  }
-};
 
 const Questions = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -148,7 +77,12 @@ const Questions = () => {
             }}
           />
         </div>
-        <div className="footer-content" />
+        <div className="footer-content">
+          Copyright &copy; 2021
+          {' '}
+          <span>PT Moduit Digital Indonesia</span>
+          . All rights reserved
+        </div>
       </div>
     </QuestionsWrapper>
   );
@@ -170,14 +104,27 @@ const QuestionsWrapper = styled.div`
       margin-bottom: 18px;
 
       .title-header {
-        width: 60%;
+        width: 70%;
         font-size: 20px;
         font-weight: bold;
         text-align: left;
       }
 
       .search-header {
-        width: 40%;
+        width: 30%;
+        padding-right: 30px
+      }
+    }
+
+    .footer-content {
+      font-size: 12px;
+      font-weight: 400;
+      color: rgb(0,0,0,0.4);
+      margin-top: 30px;
+
+      span {
+        color: #4987f2;
+        font-weight: 600;
       }
     }
   }

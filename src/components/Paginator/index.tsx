@@ -53,12 +53,14 @@ const Paginator: FC<IPaginator> = (props) => {
                 <td>{product.description}</td>
                 <td>
                   <ul className="tags-wrapper">
-                    {(product.tags || []).map((tag, idx) => {
-                      const key = `${tag}${idx}`;
-                      return (
-                        <li key={key}>{tag}</li>
-                      );
-                    })}
+                    {(!product.tags || product.tags.length <= 0)
+                      ? '-'
+                      : product.tags.map((tag, idx) => {
+                        const key = `${tag}${idx}`;
+                        return (
+                          <li key={key}>{tag}</li>
+                        );
+                      })}
                   </ul>
                 </td>
               </tr>

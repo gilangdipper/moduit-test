@@ -21,10 +21,9 @@ const Sidebar = () => {
       <Logo />
 
       {Object.keys(MENU_MAP).map((menuKey) => {
-        const activeClass = menuKey === ENUM_PATHNAME[pathname]
-          ? 'active' : '';
+        const isActive = menuKey === ENUM_PATHNAME[pathname];
         return (
-          <div key={menuKey} className={`menu-item ${activeClass}`}>
+          <div key={menuKey} className={`menu-item ${isActive && 'active'}`}>
             <Link to={ENUM_PATHNAME[menuKey]}>
               <div className="menu-icon">
                 <img alt="menu" src={LOGO_MENU_MAP[menuKey]} />
