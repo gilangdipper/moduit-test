@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import Sidebar from '../components/Sidebar';
 import SearchBox from '../components/SearchBox';
+import Paginator from '../components/Paginator';
 
 import { MENU_MAP } from '../config';
 
@@ -16,7 +17,7 @@ const Questions = () => (
           <SearchBox />
         </div>
       </div>
-      <div className="body-content" />
+      <div className="body-content"><Paginator /></div>
       <div className="footer-content" />
     </div>
   </QuestionsWrapper>
@@ -25,7 +26,7 @@ const Questions = () => (
 const QuestionsWrapper = styled.div`
   display: flex;
   width: 100vw;
-  height: 100vh;
+  height: auto;
   background-color: #f5f8fb;
 
   .main-content {
@@ -35,6 +36,7 @@ const QuestionsWrapper = styled.div`
 
     .header-content {
       display: flex;
+      margin-bottom: 18px;
 
       .title-header {
         width: 60%;
