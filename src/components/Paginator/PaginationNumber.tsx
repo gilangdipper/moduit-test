@@ -1,4 +1,6 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, {
+  FC, useEffect, useRef, useState,
+} from 'react';
 import styled from 'styled-components';
 
 import { rangeNumber } from './helper';
@@ -28,6 +30,14 @@ const PaginationNumberWrapper = styled.div`
   }
 `;
 
+const usePrevious = (value) => {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+};
+
 interface IPaginationNumber {
   numberOfPage: number,
   total_pages: number,
@@ -37,11 +47,12 @@ interface IPaginationNumber {
 const PaginationNumber: FC<IPaginationNumber> = (props) => {
   const [listNumber, setListNumber] = useState<number[]>([]);
   const { numberOfPage, updatePageNumber, total_pages } = props;
+  const prevTotalPages = usePrevious(total_pages);
 
   useEffect(() => {
     let range: number [] = listNumber;
 
-    if (listNumber.length <= 0) {
+    if (listNumber.length <= 0 || total_pages !== prevTotalPages) {
       range = rangeNumber(1, total_pages > 6 ? 6 : total_pages);
     } else {
       let lastNumber = listNumber[listNumber.length - 1];
@@ -58,7 +69,7 @@ const PaginationNumber: FC<IPaginationNumber> = (props) => {
     }
 
     setListNumber(range);
-  }, [numberOfPage]);
+  }, [numberOfPage, total_pages]);
 
   return (
     <PaginationNumberWrapper>

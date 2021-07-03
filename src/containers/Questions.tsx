@@ -13,29 +13,36 @@ import SearchBox from '../components/SearchBox';
 import Paginator from '../components/Paginator';
 
 interface IState {
-  products: IProduct[],
-  isLoading: boolean,
   error: string,
+  filter: {
+    search: string,
+  },
+  isLoading: boolean,
   pagination: {
     numberOfPage: number,
     numberOfProducts: number,
   },
+  products: IProduct[],
 }
 
 const initialState: IState = {
-  products: productsDummy,
-  isLoading: true,
   error: '',
+  filter: {
+    search: '',
+  },
+  isLoading: true,
   pagination: {
     numberOfPage: 1,
     numberOfProducts: 8,
   },
+  products: productsDummy,
 };
 
 type TAction =
   | { type: 'FETCH_PRODUCTS_SUCCESS', payload: { products: IProduct[] } }
   | { type: 'FETCH_PRODUCTS_ERROR', payload: { error: string } }
-  | { type: 'UPDATE_PAGINATION', payload: { numberOfPage?: number, numberOfProducts?: number } };
+  | { type: 'UPDATE_PAGINATION', payload: { numberOfPage?: number, numberOfProducts?: number } }
+  | { type: 'UPDATE_FILTER', payload: { search: string } };
 
 const reducer = (state: IState, action: TAction) => {
   switch (action.type) {
@@ -62,6 +69,14 @@ const reducer = (state: IState, action: TAction) => {
         },
       };
     }
+    case 'UPDATE_FILTER': {
+      return {
+        ...state,
+        filter: {
+          ...action.payload,
+        },
+      };
+    }
     default:
       return state;
   }
@@ -69,11 +84,16 @@ const reducer = (state: IState, action: TAction) => {
 
 const Questions = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { products, pagination } = state;
+  const { filter, products, pagination } = state;
   const { pathname } = useLocation();
-  const urlApi = `${BASE_API_URL}${PRODUCT_API_URL[pathname]}`;
+  let filteredProducts = products;
+
+  if (filter.search !== '') {
+    filteredProducts = filteredProducts.filter((product) => product.title.includes(filter.search));
+  }
 
   useEffect(() => {
+    const urlApi = `${BASE_API_URL}${PRODUCT_API_URL[pathname]}`;
     axios
       .get(urlApi)
       .then((response) => {
@@ -88,7 +108,7 @@ const Questions = () => {
           payload: { error },
         });
       });
-  }, [urlApi]);
+  }, [pathname]);
 
   return (
     <QuestionsWrapper>
@@ -97,12 +117,16 @@ const Questions = () => {
         <div className="header-content">
           <div className="title-header">{MENU_MAP.QUESTION_ONE}</div>
           <div className="search-header">
-            <SearchBox />
+            <SearchBox
+              updateSearchFilter={(search: string) => {
+                dispatch({ type: 'UPDATE_FILTER', payload: { search } });
+              }}
+            />
           </div>
         </div>
         <div className="body-content">
           <Paginator
-            products={products}
+            products={filteredProducts}
             numberOfPage={pagination.numberOfPage}
             numberOfProducts={pagination.numberOfProducts}
             updatePageNumber={(numberOfPage) => {
