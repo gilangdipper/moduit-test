@@ -3,13 +3,11 @@ import styled from 'styled-components';
 
 import Sidebar from '../components/Sidebar';
 
-const Questions = () => {
-  return (
-    <QuestionsWrapper>
-      <Sidebar />
-    </QuestionsWrapper>
-  );
-};
+const Questions = () => (
+  <QuestionsWrapper>
+    <Sidebar />
+  </QuestionsWrapper>
+);
 
 const QuestionsWrapper = styled.div`
   display: flex;

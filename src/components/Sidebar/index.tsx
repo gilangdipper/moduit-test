@@ -3,13 +3,11 @@ import styled from 'styled-components';
 
 import { ReactComponent as Logo } from '../../logo/logo.svg';
 
-const Sidebar = () => {
-  return (
-    <QuestionsWrapper>
-      <Logo />
-    </QuestionsWrapper>
-  );
-};
+const Sidebar = () => (
+  <QuestionsWrapper>
+    <Logo />
+  </QuestionsWrapper>
+);
 
 const QuestionsWrapper = styled.div`
   display: flex;
