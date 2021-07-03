@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const SidebarWrapper = styled.div`
   display: flex;
   flex-flow: column;
-  width: 25vw;
+  width: 20vw;
   height: auto;
   background-color: #ffffff;
   align-items: center;
@@ -19,6 +19,12 @@ export const SidebarWrapper = styled.div`
     display: flex;
     justify-content: center;
     margin-bottom: 16px;
+
+    a {
+      width: 100%;
+      display: flex;
+      text-decoration: none;
+    }
 
     .menu-icon {
       width: 25%;

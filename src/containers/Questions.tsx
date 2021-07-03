@@ -6,7 +6,12 @@ import axios from 'axios';
 import productsDummy from './dummy';
 
 import { IProduct } from '../interfaces';
-import { BASE_API_URL, MENU_MAP, PRODUCT_API_URL } from '../constants';
+import {
+  BASE_API_URL,
+  ENUM_PATHNAME,
+  MENU_MAP,
+  PRODUCT_API_URL,
+} from '../constants';
 
 import Sidebar from '../components/Sidebar';
 import SearchBox from '../components/SearchBox';
@@ -93,7 +98,7 @@ const Questions = () => {
   }
 
   useEffect(() => {
-    const urlApi = `${BASE_API_URL}${PRODUCT_API_URL[pathname]}`;
+    const urlApi = `${BASE_API_URL}${PRODUCT_API_URL[ENUM_PATHNAME[pathname]]}`;
     axios
       .get(urlApi)
       .then((response) => {
@@ -115,7 +120,7 @@ const Questions = () => {
       <Sidebar />
       <div className="main-content">
         <div className="header-content">
-          <div className="title-header">{MENU_MAP.QUESTION_ONE}</div>
+          <div className="title-header">{MENU_MAP[ENUM_PATHNAME[pathname]]}</div>
           <div className="search-header">
             <SearchBox
               updateSearchFilter={(search: string) => {
@@ -158,7 +163,7 @@ const QuestionsWrapper = styled.div`
   .main-content {
     display: block;
     padding: 32px 24px;
-    width: 75vw;
+    width: 80vw;
 
     .header-content {
       display: flex;

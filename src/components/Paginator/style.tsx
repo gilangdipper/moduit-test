@@ -32,6 +32,10 @@ export const TableWrapper = styled.div`
       color: rgb(0,0,0,0.4);
       font-weight: 500;
       padding-bottom: 8px;
+
+      &:nth-child(2) {
+        width: 15%;
+      }
     }
 
     td {
