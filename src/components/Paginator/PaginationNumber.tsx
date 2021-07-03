@@ -65,7 +65,9 @@ const PaginationNumber: FC<IPaginationNumber> = (props) => {
       <div
         className="page-number"
         onClick={() => {
-          updatePageNumber(numberOfPage - 1);
+          if ((numberOfPage - 1) > 0) {
+            updatePageNumber(numberOfPage - 1);
+          }
         }}
         role="presentation"
       >
@@ -86,7 +88,9 @@ const PaginationNumber: FC<IPaginationNumber> = (props) => {
       <div
         className="page-number"
         onClick={() => {
-          updatePageNumber(numberOfPage + 1);
+          if ((numberOfPage + 1) <= total_pages) {
+            updatePageNumber(numberOfPage + 1);
+          }
         }}
         role="presentation"
       >

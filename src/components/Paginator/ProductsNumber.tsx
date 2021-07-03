@@ -1,4 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+  FC, useEffect, useRef, useState,
+} from 'react';
 import styled from 'styled-components';
 
 const PAGE_NUMBER_MAP = [2, 4, 8, 10];
@@ -46,11 +48,27 @@ const ProductsNumberWrapper = styled.div<{ visible: boolean }>`
     .dropup-item {
       padding: 4px 0;
       font-size: 12px;
+      cursor: pointer;
+
+
+      &.active {
+        color: #044ea0;
+        font-weight: 600;
+        background-color: #d8d8d8;
+      }
     }
   }
 `;
 
-const ProductsNumber = () => {
+interface IProductsNumber {
+  numberOfProducts: number;
+  updateProductsNumber: (productsNumber: number) => void;
+}
+
+const ProductsNumber: FC<IProductsNumber> = ({
+  numberOfProducts,
+  updateProductsNumber,
+}) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState<boolean>(false);
   const handleClickOutside = (event) => {
@@ -81,13 +99,20 @@ const ProductsNumber = () => {
         type="button"
         onClick={() => setVisible(!visible)}
       >
-        8 &or;
+        {numberOfProducts}
+        {' '}
+        &or;
       </button>
       <div className="dropup-content">
         {PAGE_NUMBER_MAP.map((pageNumber) => (
           <div
             key={pageNumber}
-            className="dropup-item"
+            className={`dropup-item ${numberOfProducts === pageNumber && 'active'}`}
+            onClick={() => {
+              updateProductsNumber(pageNumber);
+              setVisible(false);
+            }}
+            role="presentation"
           >
             {pageNumber}
           </div>

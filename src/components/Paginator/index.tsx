@@ -30,7 +30,7 @@ const TABLE_HEADER_MAP = [
 
 const Paginator: FC<IPaginator> = (props) => {
   const {
-    products, numberOfPage, numberOfProducts, updatePageNumber,
+    products, numberOfPage, numberOfProducts, updatePageNumber, updateProductsNumber,
   } = props;
   const { data, total_pages } = pagination(products, numberOfPage, numberOfProducts);
 
@@ -76,7 +76,10 @@ const Paginator: FC<IPaginator> = (props) => {
           />
         </div>
         <div className="products-number">
-          <ProductsNumber />
+          <ProductsNumber
+            numberOfProducts={numberOfProducts}
+            updateProductsNumber={updateProductsNumber}
+          />
         </div>
       </PaginationConfigWrapper>
     </PaginatorWrapper>
