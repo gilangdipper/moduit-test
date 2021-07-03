@@ -1,27 +1,37 @@
 import React from 'react';
-import styled from 'styled-components';
+
+import { SidebarWrapper } from './style';
 
 import { ReactComponent as Logo } from '../../logo/logo.svg';
+import Q1 from '../../icon/Q1.svg';
+import Q2 from '../../icon/Q2.svg';
+
+import { MENU_MAP } from '../../config';
+
+const LOGO_MENU_MAP = {
+  QUESTION_ONE: Q1,
+  QUESTION_TWO: Q2,
+};
 
 const Sidebar = () => (
   <SidebarWrapper>
     <Logo />
+
+    {Object.keys(MENU_MAP).map((menuKey) => {
+      const activeClass = MENU_MAP[menuKey] === MENU_MAP.QUESTION_ONE
+        ? 'active' : '';
+      return (
+        <div className={`menu-item ${activeClass}`}>
+          <div className="menu-icon">
+            <img alt="menu" src={LOGO_MENU_MAP[menuKey]} />
+          </div>
+          <div className="menu-text">
+            {MENU_MAP[menuKey]}
+          </div>
+        </div>
+      );
+    })}
   </SidebarWrapper>
 );
-
-const SidebarWrapper = styled.div`
-  display: flex;
-  flex-flow: column;
-  width: 25vw;
-  height: 100vh;
-  background-color: #ffffff;
-  align-items: center;
-  border-radius: 0 20px 20px 0;
-  box-shadow: rgb(0 0 0 / 20%) 0px 3px 14px 0px;
-
-  svg {
-    margin-top: 24px;
-  }
-`;
 
 export default Sidebar;
