@@ -4,12 +4,12 @@ import styled from 'styled-components';
 import { ReactComponent as Logo } from '../../logo/logo.svg';
 
 const Sidebar = () => (
-  <QuestionsWrapper>
+  <SidebarWrapper>
     <Logo />
-  </QuestionsWrapper>
+  </SidebarWrapper>
 );
 
-const QuestionsWrapper = styled.div`
+const SidebarWrapper = styled.div`
   display: flex;
   flex-flow: column;
   width: 25vw;
