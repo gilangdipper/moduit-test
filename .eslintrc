@@ -12,6 +12,7 @@
     "default-case-last": "error",
     "eol-last": 2,
     "guard-for-in": "error",
+    "jsx-a11y/click-events-have-key-events": "off",
     "import/prefer-default-export": "off",
     "lines-between-class-members": ["error", "always"],
     "max-len": [1, { "code":100 }],

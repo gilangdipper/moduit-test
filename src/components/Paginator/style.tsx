@@ -64,30 +64,6 @@ export const PaginationConfigWrapper = styled.div`
   .page-indicator {
     width: 50%;
     display: flex;
-
-    .pagination {
-      display: flex;
-      border: 1px solid rgb(0, 0, 0, 0.2);
-      border-radius: 29px;
-
-      .page-number {
-        font-size: 12px;
-        font-weight: 600;
-        padding: 6px 12px;
-        color: rgb(0, 0, 0, 0.4);
-
-        &:first-child,
-        &:last-child {
-          color: #000000;
-        }
-
-        &.active {
-          color: #000000;
-          font-weight: 700;
-          border-bottom: 2px solid #044ea0;
-        }
-      }
-    }
   }
 
   .products-number {

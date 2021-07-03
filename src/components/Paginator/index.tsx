@@ -5,8 +5,10 @@ import {
   PaginatorWrapper,
   TableWrapper,
 } from './style';
+import { pagination } from './helper';
+
 import ProductsNumber from './ProductsNumber';
-import pagination from './helper/pagination';
+import PaginationNumber from './PaginationNumber';
 
 import { IProduct } from '../../interfaces';
 
@@ -27,8 +29,10 @@ const TABLE_HEADER_MAP = [
 ];
 
 const Paginator: FC<IPaginator> = (props) => {
-  const { products, numberOfPage, numberOfProducts } = props;
-  const { data } = pagination(products, numberOfPage, numberOfProducts);
+  const {
+    products, numberOfPage, numberOfProducts, updatePageNumber,
+  } = props;
+  const { data, total_pages } = pagination(products, numberOfPage, numberOfProducts);
 
   return (
     <PaginatorWrapper>
@@ -49,9 +53,12 @@ const Paginator: FC<IPaginator> = (props) => {
                 <td>{product.description}</td>
                 <td>
                   <ul className="tags-wrapper">
-                    {(product.tags || []).map((tag) => (
-                      <li key={`${tag}`}>{tag}</li>
-                    ))}
+                    {(product.tags || []).map((tag, idx) => {
+                      const key = `${tag}${idx}`;
+                      return (
+                        <li key={key}>{tag}</li>
+                      );
+                    })}
                   </ul>
                 </td>
               </tr>
@@ -62,16 +69,11 @@ const Paginator: FC<IPaginator> = (props) => {
 
       <PaginationConfigWrapper>
         <div className="page-indicator">
-          <div className="pagination">
-            <div className="page-number">&lang;</div>
-            <div className="page-number active">1</div>
-            <div className="page-number">2</div>
-            <div className="page-number">3</div>
-            <div className="page-number">4</div>
-            <div className="page-number">5</div>
-            <div className="page-number">6</div>
-            <div className="page-number">&rang;</div>
-          </div>
+          <PaginationNumber
+            numberOfPage={numberOfPage}
+            total_pages={total_pages}
+            updatePageNumber={updatePageNumber}
+          />
         </div>
         <div className="products-number">
           <ProductsNumber />
